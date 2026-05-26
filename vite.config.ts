@@ -32,6 +32,8 @@ export default defineConfig(
       }
     : {
         plugins: [react()],
+        // Served under /phone-ui/ on GitHub Pages; root locally.
+        base: process.env.GHPAGES ? "/phone-ui/" : "/",
         // Demo site build (e.g. for GitHub Pages); kept separate from the library dist/.
         build: { outDir: "demo-dist" },
       },

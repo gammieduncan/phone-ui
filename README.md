@@ -4,6 +4,8 @@ Render realistic, **data-driven phone emulations** as React components. Drop in 
 
 Great for storytelling sites, interactive fiction, ARGs, product mockups, design comps, and demos.
 
+**[▶ Live demo](https://gammieduncan.github.io/phone-ui/)** · [npm](https://www.npmjs.com/package/@gammieduncan/phone-ui)
+
 <p align="center">
   <img src="./docs/home.png" alt="Home screen" width="220" />
   <img src="./docs/messages.png" alt="Messages" width="220" />
@@ -12,8 +14,8 @@ Great for storytelling sites, interactive fiction, ARGs, product mockups, design
 </p>
 
 ```tsx
-import { Phone } from "phone-ui";
-import "phone-ui/styles.css";
+import { Phone } from "@gammieduncan/phone-ui";
+import "@gammieduncan/phone-ui/styles.css";
 
 <Phone
   owner={{ name: "Alex Rivera" }}
@@ -35,7 +37,7 @@ Only the apps you provide data for appear on the home screen. Tap an icon to ope
 ## Install
 
 ```bash
-npm install phone-ui
+npm install @gammieduncan/phone-ui
 # peer deps: react >=18, react-dom >=18
 ```
 
@@ -62,7 +64,7 @@ There are three ways to get your content onto the phone — pick whichever fits.
 **1. Pass it as props (in code).** This is the primary API. Build the object in your app and hand it to `<Phone>`:
 
 ```tsx
-import { Phone } from "phone-ui";
+import { Phone } from "@gammieduncan/phone-ui";
 import myData from "./my-phone.json";
 
 <Phone apps={myData.apps} owner={myData.owner} wallpaper={myData.wallpaper} />;
@@ -71,7 +73,7 @@ import myData from "./my-phone.json";
 **2. Parse a JSON file with the built-in loader.** A `.json` file is the easiest format to hand-author. Validate + load it with `parsePhoneData`, which accepts a string or parsed object and throws a readable error on bad input:
 
 ```tsx
-import { Phone, parsePhoneData } from "phone-ui";
+import { Phone, parsePhoneData } from "@gammieduncan/phone-ui";
 
 const data = parsePhoneData(await fetch("/my-phone.json").then((r) => r.text()));
 <Phone {...data} />;
@@ -143,7 +145,7 @@ Full token list in [`src/theme.css`](./src/theme.css).
 You don't have to use the whole phone. Each screen is exported on its own:
 
 ```tsx
-import { Messages } from "phone-ui";
+import { Messages } from "@gammieduncan/phone-ui";
 
 <Messages data={{ chats: [...] }} onExit={() => {}} />;
 ```
