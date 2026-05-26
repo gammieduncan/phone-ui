@@ -1,0 +1,51 @@
+{
+  "name": "phone-ui",
+  "version": "0.1.0",
+  "description": "Render realistic, data-driven phone emulations (Messages, Photos, Notes, Calls, Browser history, Tinder, Instagram) as React components.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "phone",
+    "mockup",
+    "emulator",
+    "ui",
+    "iphone",
+    "device-frame",
+    "storytelling"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/phone-ui.umd.cjs",
+  "module": "./dist/phone-ui.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/phone-ui.js",
+      "require": "./dist/phone-ui.umd.cjs"
+    },
+    "./styles.css": "./dist/style.css"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build:demo": "vite build",
+    "build": "tsc --noEmit && LIB=1 vite build",
+    "preview": "vite preview"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
+    "vite-plugin-dts": "^3.9.1"
+  }
+}

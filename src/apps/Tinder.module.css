@@ -1,0 +1,206 @@
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #08080c;
+  color: var(--pui-text);
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 17px;
+  letter-spacing: -0.3px;
+  background: linear-gradient(180deg, #ff7854, #fd267d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tabToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fd267d;
+  padding: 0;
+}
+
+/* ---- deck ---- */
+.deck {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px 18px;
+  min-height: 0;
+}
+
+.empty {
+  margin: auto;
+  color: var(--pui-text-secondary);
+  font-size: 15px;
+}
+
+.card {
+  flex: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.photo {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #1a1a20;
+  background-size: cover;
+  background-position: center;
+}
+
+.segments {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  gap: 4px;
+  z-index: 2;
+}
+
+.segment {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.segmentOn {
+  background: #fff;
+}
+
+.tapZone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 40%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+  padding: 0;
+}
+.tapLeft {
+  left: 0;
+}
+.tapRight {
+  right: 0;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 40px 18px 18px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0));
+  z-index: 2;
+  pointer-events: none;
+}
+
+.nameRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.age {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.job {
+  margin: 6px 0 0;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.distance {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* ---- actions ---- */
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  padding-top: 16px;
+  flex: none;
+}
+
+.action {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pui-bg-elevated);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+.action:active {
+  transform: scale(0.92);
+}
+
+.nope {
+  color: #fd5068;
+}
+
+.like {
+  color: #fff;
+  background: linear-gradient(180deg, #ff7854, #fd267d);
+}
+
+/* ---- matches ---- */
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.matchRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border-bottom: 0.5px solid var(--pui-border);
+}
+
+.matchBody {
+  flex: 1;
+  min-width: 0;
+}
+
+.matchName {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.matchPreview {
+  margin: 2px 0 0;
+  color: var(--pui-text-secondary);
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

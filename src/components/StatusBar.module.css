@@ -1,0 +1,58 @@
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 44px;
+  padding: 0 26px 0 30px;
+  color: var(--pui-text);
+  font-size: 15px;
+  font-weight: 600;
+  flex: none;
+  position: relative;
+  z-index: 5;
+}
+
+.bar.dark {
+  color: #000;
+}
+
+.time {
+  letter-spacing: 0.2px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.battery {
+  display: inline-flex;
+  align-items: center;
+  width: 24px;
+  height: 12px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  padding: 1.5px;
+  position: relative;
+  opacity: 0.9;
+}
+
+.battery::after {
+  content: "";
+  position: absolute;
+  right: -3px;
+  top: 3.5px;
+  width: 2px;
+  height: 4px;
+  background: currentColor;
+  border-radius: 0 1px 1px 0;
+}
+
+.batteryLevel {
+  display: block;
+  height: 100%;
+  width: 80%;
+  background: currentColor;
+  border-radius: 1.5px;
+}

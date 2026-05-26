@@ -1,0 +1,42 @@
+/*
+ * phone-ui design tokens.
+ * Scoped to .pui-root so consumers can theme per-instance and avoid global leakage.
+ * Default palette is a dark "evidence phone" look; override any token to reskin.
+ */
+.pui-root {
+  /* surfaces */
+  --pui-bg: #010a18;
+  --pui-bg-elevated: #0b1626;
+  --pui-bg-icon-grey: #313946;
+  --pui-bg-hover: #4c535e;
+  --pui-border: #313946;
+
+  /* text */
+  --pui-text: #f0f5ff;
+  --pui-text-secondary: #9ba0a7;
+  --pui-text-tertiary: #696e76;
+
+  /* accents */
+  --pui-blue: #1a70ff;
+  --pui-blue-hover: #0054df;
+  --pui-accent: linear-gradient(272deg, #ff3f18, #ff5e3d);
+  --pui-error: #d83640;
+  --pui-success: #008756;
+
+  /* app icon tints */
+  --pui-icon-blue: #1a70ff;
+  --pui-icon-green: #34c759;
+  --pui-icon-rose: #e54980;
+  --pui-icon-purple: #a460ef;
+  --pui-icon-orange: #ec9550;
+  --pui-icon-yellow: #f4cb55;
+  --pui-icon-lightblue: #73cae2;
+
+  /* geometry */
+  --pui-font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --pui-radius: 14px;
+  --pui-frame-radius: 46px;
+  --pui-width: 375px;
+  --pui-height: 812px;
+}

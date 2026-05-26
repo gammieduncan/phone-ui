@@ -1,0 +1,16 @@
+.avatar {
+  object-fit: cover;
+  flex: none;
+  background: var(--pui-bg-icon-grey);
+}
+
+.fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  color: #fff;
+  font-weight: 600;
+  line-height: 1;
+  user-select: none;
+}
