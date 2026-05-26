@@ -203,6 +203,17 @@ export interface PhoneOwner {
   avatar?: string;
 }
 
+/**
+ * A complete phone description, as stored in a `.json` file. Maps onto the
+ * `<Phone>` props. Parse one with `parsePhoneData()`.
+ */
+export interface PhoneData {
+  apps: PhoneApps;
+  owner?: PhoneOwner;
+  wallpaper?: string;
+  statusTime?: string;
+}
+
 export interface PhoneProps {
   apps: PhoneApps;
   owner?: PhoneOwner;

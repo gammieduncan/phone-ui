@@ -1,7 +1,7 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import { Phone } from "../index";
-import type { AppId, PhoneApps, PhoneOwner } from "../index";
+import { Phone, parsePhoneData } from "../index";
+import type { AppId, PhoneData } from "../index";
 import { sampleApps } from "./sampleData";
 import "./demo.css";
 
@@ -10,41 +10,21 @@ const params = new URLSearchParams(location.search);
 const initialApp = (params.get("app") as AppId) || undefined;
 const initialSearch = params.get("search") ?? undefined;
 
-/** Shape of an uploaded phone file. A bare PhoneApps object is also accepted. */
-interface PhoneConfig {
-  owner?: PhoneOwner;
-  wallpaper?: string;
-  statusTime?: string;
-  apps: PhoneApps;
-}
-
-const SAMPLE_CONFIG: PhoneConfig = {
-  owner: { name: "Adam Kessler" },
+const SAMPLE_CONFIG: PhoneData = {
+  owner: { name: "Alex Rivera" },
   wallpaper: "linear-gradient(160deg,#1a2a4a,#0a1020 70%,#1a1030)",
   statusTime: "9:41",
   apps: sampleApps,
 };
 
-function normalize(parsed: unknown): PhoneConfig {
-  if (!parsed || typeof parsed !== "object") throw new Error("File is not a JSON object.");
-  const obj = parsed as Record<string, unknown>;
-  // Accept either a full config ({ owner, apps, ... }) or a bare apps object.
-  const config: PhoneConfig = "apps" in obj ? (obj as unknown as PhoneConfig) : { apps: obj as PhoneApps };
-  if (!config.apps || typeof config.apps !== "object") {
-    throw new Error('Missing an "apps" object (e.g. { "messages": { "chats": [...] } }).');
-  }
-  return config;
-}
-
 function Demo() {
-  const [config, setConfig] = useState<PhoneConfig>(SAMPLE_CONFIG);
+  const [config, setConfig] = useState<PhoneData>(SAMPLE_CONFIG);
   const [error, setError] = useState<string | null>(null);
   const [loadedName, setLoadedName] = useState<string | null>(null);
 
   const handleFile = async (file: File) => {
     try {
-      const text = await file.text();
-      const next = normalize(JSON.parse(text));
+      const next = parsePhoneData(await file.text());
       setConfig(next);
       setError(null);
       setLoadedName(file.name);

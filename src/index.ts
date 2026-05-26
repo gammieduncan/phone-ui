@@ -14,9 +14,11 @@ export { Tinder } from "./apps/Tinder";
 export { Instagram } from "./apps/Instagram";
 
 export { APP_REGISTRY, DEFAULT_ORDER } from "./apps/registry";
+export { parsePhoneData } from "./lib/loadData";
 
 export type {
   PhoneProps,
+  PhoneData,
   PhoneApps,
   PhoneOwner,
   AppId,

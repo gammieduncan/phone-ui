@@ -1,0 +1,92 @@
+{
+  "owner": { "name": "Alex Rivera" },
+  "wallpaper": "linear-gradient(160deg,#1a2a4a,#0a1020 70%,#1a1030)",
+  "statusTime": "9:41",
+  "apps": {
+    "messages": {
+      "chats": [
+        {
+          "id": "c1",
+          "unread": 1,
+          "contact": { "id": "sam", "name": "Sam Park", "avatar": "https://i.pravatar.cc/200?img=15" },
+          "messages": [
+            { "id": "m1", "direction": "in", "text": "you around later?", "timestamp": "2024-03-14T18:02:00Z" },
+            { "id": "m2", "direction": "out", "text": "yep, after 6", "timestamp": "2024-03-14T18:05:00Z", "status": "read" }
+          ]
+        }
+      ]
+    },
+    "notes": {
+      "notes": [
+        { "id": "n1", "pinned": true, "title": "Wifi", "body": "network: home\npassword: changeme", "date": "2024-03-01T08:00:00Z" },
+        { "id": "n2", "title": "To do", "body": "book flights\nrenew passport", "date": "2024-03-13T17:30:00Z" }
+      ]
+    },
+    "calls": {
+      "calls": [
+        { "id": "k1", "contact": { "id": "sam", "name": "Sam Park" }, "type": "outgoing", "timestamp": "2024-03-14T17:50:00Z", "durationSeconds": 312 },
+        { "id": "k2", "contact": { "id": "unknown", "name": "(415) 555-0192" }, "type": "missed", "timestamp": "2024-03-14T14:20:00Z" }
+      ]
+    },
+    "browser": {
+      "engine": "Chrome",
+      "history": [
+        { "id": "b1", "title": "Best hikes nearby - AllTrails", "url": "https://www.alltrails.com", "timestamp": "2024-03-14T15:01:00Z" },
+        { "id": "b2", "title": "cheap flights - Google Search", "url": "https://www.google.com/search?q=cheap+flights", "timestamp": "2024-03-14T15:00:00Z" }
+      ]
+    },
+    "photos": {
+      "photos": [
+        { "id": "p1", "src": "https://picsum.photos/seed/a/500/500", "date": "2024-03-10T12:00:00Z", "caption": "Weekend trip", "location": "Big Sur, CA" },
+        { "id": "p2", "src": "https://picsum.photos/seed/b/500/500", "date": "2024-03-11T12:00:00Z" }
+      ]
+    },
+    "tinder": {
+      "deck": [
+        {
+          "id": "t1",
+          "name": "Jess",
+          "age": 27,
+          "distance": "2 miles away",
+          "jobTitle": "Graphic Designer",
+          "bio": "Dog mom · coffee snob",
+          "photos": ["https://picsum.photos/seed/j1/700/900", "https://picsum.photos/seed/j2/700/900"]
+        }
+      ],
+      "matches": [
+        { "profile": { "id": "mt1", "name": "Dana", "photos": ["https://i.pravatar.cc/200?img=20"] }, "matchedAt": "2024-03-10T00:00:00Z", "lastMessage": "haha that's so true" }
+      ]
+    },
+    "instagram": {
+      "profile": {
+        "username": "alex.r",
+        "displayName": "Alex Rivera",
+        "avatar": "https://i.pravatar.cc/200?img=8",
+        "bio": "photographer · probably outside",
+        "postsCount": 2,
+        "followers": 1843,
+        "following": 412
+      },
+      "posts": [
+        {
+          "id": "ig1",
+          "images": ["https://picsum.photos/seed/ig1/600/600"],
+          "caption": "golden hour never misses",
+          "likes": 137,
+          "timestamp": "2024-03-14T12:00:00Z",
+          "location": "San Francisco, CA",
+          "comments": [
+            { "id": "cm1", "username": "sam.park", "text": "this is gorgeous", "likes": 3 }
+          ]
+        },
+        {
+          "id": "ig2",
+          "images": ["https://picsum.photos/seed/ig2/600/600"],
+          "caption": "weekend reset",
+          "likes": 174,
+          "timestamp": "2024-03-13T12:00:00Z"
+        }
+      ]
+    }
+  }
+}

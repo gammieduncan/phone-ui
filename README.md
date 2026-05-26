@@ -4,12 +4,19 @@ Render realistic, **data-driven phone emulations** as React components. Drop in 
 
 Great for storytelling sites, interactive fiction, ARGs, product mockups, design comps, and demos.
 
+<p align="center">
+  <img src="./docs/home.png" alt="Home screen" width="220" />
+  <img src="./docs/messages.png" alt="Messages" width="220" />
+  <img src="./docs/instagram.png" alt="Instagram profile" width="220" />
+  <img src="./docs/tinder.png" alt="Tinder" width="220" />
+</p>
+
 ```tsx
 import { Phone } from "phone-ui";
 import "phone-ui/styles.css";
 
 <Phone
-  owner={{ name: "Adam Kessler" }}
+  owner={{ name: "Alex Rivera" }}
   wallpaper="linear-gradient(160deg,#1a2a4a,#0a1020)"
   apps={{
     messages: { chats: [...] },
@@ -50,11 +57,31 @@ See [`src/types.ts`](./src/types.ts) for the full schema, and [`src/demo/sampleD
 
 ### Loading your own data
 
-You supply data however you like — inline, fetched from an API, or loaded from a JSON file. The demo playground (`npm run dev`) has an **Upload data (.json)** button plus a **Download template** button so you can grab a starter file, edit it, and drop it back in. The file is a single JSON object:
+There are three ways to get your content onto the phone — pick whichever fits.
+
+**1. Pass it as props (in code).** This is the primary API. Build the object in your app and hand it to `<Phone>`:
+
+```tsx
+import { Phone } from "phone-ui";
+import myData from "./my-phone.json";
+
+<Phone apps={myData.apps} owner={myData.owner} wallpaper={myData.wallpaper} />;
+```
+
+**2. Parse a JSON file with the built-in loader.** A `.json` file is the easiest format to hand-author. Validate + load it with `parsePhoneData`, which accepts a string or parsed object and throws a readable error on bad input:
+
+```tsx
+import { Phone, parsePhoneData } from "phone-ui";
+
+const data = parsePhoneData(await fetch("/my-phone.json").then((r) => r.text()));
+<Phone {...data} />;
+```
+
+The file is a single object — see the ready-to-edit **[`examples/phone-data.json`](./examples/phone-data.json)**:
 
 ```json
 {
-  "owner": { "name": "Adam Kessler" },
+  "owner": { "name": "Alex Rivera" },
   "wallpaper": "linear-gradient(160deg,#1a2a4a,#0a1020)",
   "statusTime": "9:41",
   "apps": {
@@ -65,7 +92,23 @@ You supply data however you like — inline, fetched from an API, or loaded from
 }
 ```
 
-A bare `apps` object (without the `owner`/`wallpaper` wrapper) is also accepted. Anything under `apps` maps directly to the `<Phone apps={...} />` prop.
+A bare `apps` object (without the `owner`/`wallpaper` wrapper) is also accepted.
+
+**3. Upload it in the playground.** Run `npm run dev` and use the **Upload data (.json)** button (with **Download template** to grab a starter file). Good for quickly previewing content without touching code.
+
+> **Cloned the repo?** The demo's sample content lives in [`src/demo/sampleData.ts`](./src/demo/sampleData.ts) — edit that to change what `npm run dev` shows, or just upload your JSON. For your own project, install the package and use option 1 or 2 above.
+
+### Changing the wallpaper
+
+The `wallpaper` prop takes **either** an image URL **or** any CSS `background` value:
+
+```tsx
+<Phone wallpaper="https://example.com/bg.jpg" apps={...} />          // remote image
+<Phone wallpaper="/wallpaper.jpg" apps={...} />                       // local file in /public
+<Phone wallpaper="linear-gradient(160deg,#1a2a4a,#0a1020)" apps={...} /> // CSS gradient
+```
+
+For a local image in a cloned repo or Vite app, drop the file in `public/` and reference it by path (e.g. `/wallpaper.jpg`). In JSON data, set the same string on the top-level `"wallpaper"` field.
 
 ## `<Phone>` props
 
@@ -76,6 +119,7 @@ A bare `apps` object (without the `owner`/`wallpaper` wrapper) is also accepted.
 | `wallpaper` | `string` | Image URL **or** any CSS background (e.g. a gradient). |
 | `statusTime` | `string` | Status-bar clock. Default `"9:41"`. |
 | `initialApp` | `AppId` | Open straight into an app. |
+| `initialSearch` | `string` | Open Spotlight search on mount, pre-filled with this query. |
 | `appOrder` | `AppId[]` | Reorder / restrict the home grid. |
 | `frameless` | `boolean` | Render the screen without the device bezel. |
 | `className` | `string` | Extra class on the root. |
@@ -103,6 +147,27 @@ import { Messages } from "phone-ui";
 
 <Messages data={{ chats: [...] }} onExit={() => {}} />;
 ```
+
+## Adding a new app
+
+Apps are self-contained and registered in one place, so adding one (say, a Maps or Email app) is mechanical. All files live under [`src/`](./src):
+
+1. **Define its data shape** in [`src/types.ts`](./src/types.ts) — e.g. a `MapsData` interface — and add it to the `PhoneApps` interface and the `AppId` union.
+2. **Build the screen** in `src/apps/Maps.tsx` (+ `Maps.module.css`). Follow any existing app, e.g. [`Messages.tsx`](./src/apps/Messages.tsx). The contract is:
+   ```tsx
+   export function Maps({ data, onExit, openItemId }: {
+     data: MapsData;
+     onExit: () => void;       // call to return to the home screen
+     openItemId?: string;      // optional: deep-link target from search
+   }) { ... }
+   ```
+   Reuse the shared building blocks: `AppHeader` (nav bar with back button), `Avatar`, the icon glyphs in `components/icons.tsx`, and the helpers in `lib/format.ts`. Style with the `var(--pui-*)` theme tokens.
+3. **Add a launcher icon** — a small component in [`src/components/icons.tsx`](./src/components/icons.tsx).
+4. **Register it** in [`src/apps/registry.tsx`](./src/apps/registry.tsx): add an entry to `APP_REGISTRY` (label, `Icon`, `has` predicate, `render`, optional `dock` slot) and include its id in `DEFAULT_ORDER`.
+5. **(Optional) Make it searchable** by adding a block to [`src/lib/search.ts`](./src/lib/search.ts) so its content shows up in Spotlight.
+6. **Export its types** from [`src/index.ts`](./src/index.ts).
+
+That's it — the home grid, navigation, and (if wired) search pick it up automatically.
 
 ## Develop
 
