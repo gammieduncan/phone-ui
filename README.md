@@ -4,6 +4,8 @@ Render realistic, **data-driven phone emulations** as React components. Drop in 
 
 Great for storytelling sites, interactive fiction, ARGs, product mockups, design comps, and demos.
 
+> Built for [a writing project I spent a decade on →](https://tenminutestopingpong.substack.com/p/i-spent-a-decade-of-my-life-on-an), where it powers an interactive in-story phone.
+
 **[▶ Live demo](https://gammieduncan.github.io/phone-ui/)** · [npm](https://www.npmjs.com/package/@gammieduncan/phone-ui)
 
 <p align="center">
