@@ -11,7 +11,7 @@ const initialApp = (params.get("app") as AppId) || undefined;
 const initialSearch = params.get("search") ?? undefined;
 
 const SAMPLE_CONFIG: PhoneData = {
-  owner: { name: "Alex Rivera" },
+  owner: { name: "Duncan Gammie" },
   wallpaper: "linear-gradient(160deg,#1a2a4a,#0a1020 70%,#1a1030)",
   statusTime: "9:41",
   apps: sampleApps,

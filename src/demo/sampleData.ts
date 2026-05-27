@@ -90,8 +90,8 @@ export const sampleApps: PhoneApps = {
 
   instagram: {
     profile: {
-      username: "alex.r",
-      displayName: "Alex Rivera",
+      username: "duncan.g",
+      displayName: "Duncan Gammie",
       avatar: face(8),
       bio: "📍 SF · photographer · probably outside",
       postsCount: 6,

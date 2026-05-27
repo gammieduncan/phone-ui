@@ -18,7 +18,7 @@ import { Phone } from "@gammieduncan/phone-ui";
 import "@gammieduncan/phone-ui/styles.css";
 
 <Phone
-  owner={{ name: "Alex Rivera" }}
+  owner={{ name: "Duncan Gammie" }}
   wallpaper="linear-gradient(160deg,#1a2a4a,#0a1020)"
   apps={{
     messages: { chats: [...] },
@@ -83,7 +83,7 @@ The file is a single object — see the ready-to-edit **[`examples/phone-data.js
 
 ```json
 {
-  "owner": { "name": "Alex Rivera" },
+  "owner": { "name": "Duncan Gammie" },
   "wallpaper": "linear-gradient(160deg,#1a2a4a,#0a1020)",
   "statusTime": "9:41",
   "apps": {
