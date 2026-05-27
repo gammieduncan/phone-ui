@@ -61,12 +61,48 @@
 }
 
 .stage {
+  position: relative;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   min-height: 0;
+  touch-action: pan-y;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+.nav:hover {
+  opacity: 1;
+}
+.navLeft {
+  left: 10px;
+}
+.navRight {
+  right: 10px;
+}
+
+.counter {
+  font-size: 15px;
+  font-weight: 600;
 }
 
 .full {

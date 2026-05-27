@@ -1,6 +1,6 @@
 {
   "name": "@gammieduncan/phone-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Render realistic, data-driven phone emulations (Messages, Photos, Notes, Calls, Browser history, Tinder, Instagram) as React components.",
   "type": "module",
   "license": "MIT",

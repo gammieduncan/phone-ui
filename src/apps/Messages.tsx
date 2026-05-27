@@ -46,6 +46,7 @@ export function Messages({ data, onExit, openItemId }: Props) {
 }
 
 function Thread({ chat, onBack }: { chat: ChatThread; onBack: () => void }) {
+  const [viewer, setViewer] = useState<string | null>(null);
   return (
     <div className={styles.screen}>
       <AppHeader
@@ -69,7 +70,14 @@ function Thread({ chat, onBack }: { chat: ChatThread; onBack: () => void }) {
                 <div className={styles.bubble}>
                   {m.attachments?.map((a, j) =>
                     a.type === "image" ? (
-                      <img key={j} className={styles.attachImg} src={a.url} alt={a.label ?? ""} />
+                      <button
+                        key={j}
+                        type="button"
+                        className={styles.attachImgBtn}
+                        onClick={() => setViewer(a.url)}
+                      >
+                        <img className={styles.attachImg} src={a.url} alt={a.label ?? ""} />
+                      </button>
                     ) : (
                       <a key={j} className={styles.attachLink} href={a.url} target="_blank" rel="noreferrer">
                         {a.label ?? a.url}
@@ -86,6 +94,12 @@ function Thread({ chat, onBack }: { chat: ChatThread; onBack: () => void }) {
           );
         })}
       </div>
+      {viewer && (
+        <div className={styles.lightbox} onClick={() => setViewer(null)}>
+          <button type="button" className={styles.lightboxClose} aria-label="Close">×</button>
+          <img className={styles.lightboxImg} src={viewer} alt="" />
+        </div>
+      )}
     </div>
   );
 }

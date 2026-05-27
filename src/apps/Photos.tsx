@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Photo, PhotosData } from "../types";
 import { AppHeader } from "../components/AppHeader";
 import { formatLongDate, parseDate } from "../lib/format";
@@ -35,9 +35,11 @@ function groupByMonth(photos: Photo[]): { label: string; photos: Photo[] }[] {
 
 export function Photos({ data, onExit, openItemId }: Props) {
   const [openId, setOpenId] = useState<string | null>(openItemId ?? null);
-  const photo = data.photos.find((p) => p.id === openId) ?? null;
+  const openIndex = openId ? data.photos.findIndex((p) => p.id === openId) : -1;
 
-  if (photo) return <Detail photo={photo} onBack={() => setOpenId(null)} />;
+  if (openIndex >= 0) {
+    return <Detail photos={data.photos} index={openIndex} onBack={() => setOpenId(null)} />;
+  }
 
   if (data.photos.length === 0) {
     return (
@@ -86,13 +88,58 @@ function Grid({ photos, onOpen }: { photos: Photo[]; onOpen: (id: string) => voi
   );
 }
 
-function Detail({ photo, onBack }: { photo: Photo; onBack: () => void }) {
+function Detail({ photos, index, onBack }: { photos: Photo[]; index: number; onBack: () => void }) {
+  const [i, setI] = useState(index);
+  const touchX = useRef<number | null>(null);
+
+  const photo = photos[i];
+  const canPrev = i > 0;
+  const canNext = i < photos.length - 1;
+  const prev = () => canPrev && setI((n) => n - 1);
+  const next = () => canNext && setI((n) => n + 1);
+
+  // Arrow-key navigation while the detail view is open.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") prev();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "Escape") onBack();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current == null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    if (dx > 50) prev();
+    else if (dx < -50) next();
+    touchX.current = null;
+  };
+
   const date = formatLongDate(photo.date);
   return (
     <div className={`${styles.screen} ${styles.detailScreen}`}>
-      <AppHeader onBack={onBack} backLabel="Photos" />
-      <div className={styles.stage}>
+      <AppHeader
+        onBack={onBack}
+        backLabel="Photos"
+        title={photos.length > 1 ? <span className={styles.counter}>{i + 1} of {photos.length}</span> : undefined}
+      />
+      <div className={styles.stage} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <img className={styles.full} src={photo.src} alt={photo.caption ?? ""} />
+        {canPrev && (
+          <button type="button" className={`${styles.nav} ${styles.navLeft}`} onClick={prev} aria-label="Previous photo">
+            ‹
+          </button>
+        )}
+        {canNext && (
+          <button type="button" className={`${styles.nav} ${styles.navRight}`} onClick={next} aria-label="Next photo">
+            ›
+          </button>
+        )}
       </div>
       {(photo.caption || photo.location || date) && (
         <div className={styles.meta}>
