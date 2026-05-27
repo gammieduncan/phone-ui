@@ -6,6 +6,7 @@ import {
   NotesIcon,
   PhoneIcon,
   BrowserIcon,
+  PodcastIcon,
   TinderIcon,
   InstagramIcon,
 } from "../components/icons";
@@ -14,6 +15,7 @@ import { Photos } from "./Photos";
 import { Notes } from "./Notes";
 import { Calls } from "./Calls";
 import { Browser } from "./Browser";
+import { Podcast } from "./Podcast";
 import { Tinder } from "./Tinder";
 import { Instagram } from "./Instagram";
 
@@ -72,6 +74,13 @@ export const APP_REGISTRY: Record<AppId, AppDefinition> = {
     has: (a) => !!a.notes?.notes?.length,
     render: (a, onExit, id) => <Notes data={a.notes!} onExit={onExit} openItemId={id} />,
   },
+  podcast: {
+    id: "podcast",
+    label: "Podcasts",
+    Icon: PodcastIcon,
+    has: (a) => !!(a.podcast?.episodes?.length || a.podcast?.feedUrl),
+    render: (a, onExit, id) => <Podcast data={a.podcast!} onExit={onExit} openItemId={id} />,
+  },
   tinder: {
     id: "tinder",
     label: "Tinder",
@@ -92,6 +101,7 @@ export const DEFAULT_ORDER: AppId[] = [
   "messages",
   "photos",
   "notes",
+  "podcast",
   "tinder",
   "instagram",
   "calls",

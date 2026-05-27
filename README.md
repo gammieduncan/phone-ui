@@ -1,16 +1,22 @@
 # phone-ui
 
-Render realistic, **data-driven phone emulations** as React components. Drop in your own data and get a believable phone with working app screens — Messages, Photos, Notes, Phone/Calls, Browser history, Tinder, and Instagram.
+Render realistic, **data-driven phone emulations** as React components. Drop in your own data and get a believable phone with working app screens — Messages, Photos, Notes, Phone/Calls, Browser history, Podcast, Tinder, and Instagram.
 
 Great for storytelling sites, interactive fiction, ARGs, product mockups, design comps, and demos.
 
 **[▶ Live demo](https://gammieduncan.github.io/phone-ui/)** · [npm](https://www.npmjs.com/package/@gammieduncan/phone-ui)
 
 <p align="center">
-  <img src="./docs/home.png" alt="Home screen" width="220" />
-  <img src="./docs/messages.png" alt="Messages" width="220" />
-  <img src="./docs/instagram.png" alt="Instagram profile" width="220" />
-  <img src="./docs/tinder.png" alt="Tinder" width="220" />
+  <img src="./docs/demo.gif" alt="phone-ui interaction demo" width="280" />
+</p>
+<p align="center">
+  <em><a href="./docs/demo.mp4">▶ watch the MP4</a> · or try the <a href="https://gammieduncan.github.io/phone-ui/">live demo</a></em>
+</p>
+<p align="center">
+  <img src="./docs/home.png" alt="Home screen" width="200" />
+  <img src="./docs/messages.png" alt="Messages" width="200" />
+  <img src="./docs/instagram.png" alt="Instagram profile" width="200" />
+  <img src="./docs/tinder.png" alt="Tinder" width="200" />
 </p>
 
 ```tsx
@@ -26,6 +32,7 @@ import "@gammieduncan/phone-ui/styles.css";
     notes:    { notes: [...] },
     calls:    { calls: [...] },
     browser:  { engine: "Chrome", history: [...] },
+    podcast:  { feedUrl: "https://feed.podbean.com/yourshow/feed.xml" },
     tinder:   { deck: [...], matches: [...] },
     instagram:{ profile: {...}, posts: [...], feed: [...] },
   }}
@@ -52,10 +59,31 @@ Every app is fully typed. Import the types you need:
 | Notes | `notes` | `Note` |
 | Phone / Calls | `calls` | `CallRecord` |
 | Browser history | `browser` | `BrowserVisit` |
+| Podcast | `podcast` | `PodcastData`, `PodcastEpisode` |
 | Tinder | `tinder` | `TinderProfile`, `TinderMatch` |
 | Instagram | `instagram` | `IgAccount`, `IgPost`, `IgComment` |
 
 See [`src/types.ts`](./src/types.ts) for the full schema, and [`src/demo/sampleData.ts`](./src/demo/sampleData.ts) for a complete worked example.
+
+### Podcast: RSS or static
+
+The Podcast app can be driven two ways. Easiest is a **podcast RSS feed** — the app fetches it at runtime and parses the show title, artwork, description, and every episode (with a streaming audio player):
+
+```tsx
+podcast: { feedUrl: "https://feed.podbean.com/yourshow/feed.xml" }
+```
+
+The feed host must allow cross-origin requests (`Access-Control-Allow-Origin`); most podcast hosts, including Podbean, do. Or pass **static episodes** (no network):
+
+```tsx
+podcast: {
+  showName: "my show",
+  artwork: "/cover.jpg",
+  episodes: [
+    { id: "1", title: "Episode 1", audioUrl: "/ep1.mp3", durationSeconds: 2795 },
+  ],
+}
+```
 
 ### Loading your own data
 
@@ -120,11 +148,32 @@ For a local image in a cloned repo or Vite app, drop the file in `public/` and r
 | `owner` | `{ name, avatar? }` | Shown on the home screen. |
 | `wallpaper` | `string` | Image URL **or** any CSS background (e.g. a gradient). |
 | `statusTime` | `string` | Status-bar clock. Default `"9:41"`. |
+| `grid` | `AppId[]` | Which apps appear on the home grid, in order. See below. |
+| `dock` | `AppId[]` | Which apps appear in the bottom dock, in order (max 4). |
 | `initialApp` | `AppId` | Open straight into an app. |
 | `initialSearch` | `string` | Open Spotlight search on mount, pre-filled with this query. |
-| `appOrder` | `AppId[]` | Reorder / restrict the home grid. |
 | `frameless` | `boolean` | Render the screen without the device bezel. |
 | `className` | `string` | Extra class on the root. |
+
+`AppId` is one of: `"messages" | "photos" | "notes" | "calls" | "browser" | "tinder" | "instagram"`.
+
+### Choosing & arranging apps
+
+By default, every app you pass data for is shown — a sensible set in the dock (Phone, Messages, Browser, Photos) and the rest on the grid. To take control, use `grid` and `dock`:
+
+```tsx
+<Phone
+  apps={myData}
+  // home grid, left-to-right / top-to-bottom:
+  grid={["messages", "instagram", "tinder", "notes"]}
+  // bottom dock, left-to-right:
+  dock={["calls", "photos"]}
+/>;
+```
+
+- **Pick which apps are available:** only apps listed in `grid` or `dock` are shown. Anything you omit is hidden — even if you passed its data. (Pass neither prop to show everything.)
+- **Place them:** order within each list is the on-screen order. Listing an app in `grid` keeps it off the default dock.
+- An app still needs data to appear; listing an empty app does nothing.
 
 ## Theming
 

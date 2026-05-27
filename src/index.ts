@@ -10,6 +10,7 @@ export { Photos } from "./apps/Photos";
 export { Notes } from "./apps/Notes";
 export { Calls } from "./apps/Calls";
 export { Browser } from "./apps/Browser";
+export { Podcast } from "./apps/Podcast";
 export { Tinder } from "./apps/Tinder";
 export { Instagram } from "./apps/Instagram";
 
@@ -41,6 +42,9 @@ export type {
   // browser
   BrowserData,
   BrowserVisit,
+  // podcast
+  PodcastData,
+  PodcastEpisode,
   // tinder
   TinderData,
   TinderProfile,

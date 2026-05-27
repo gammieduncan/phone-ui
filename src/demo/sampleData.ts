@@ -5,6 +5,11 @@ const face = (n: number) => `https://i.pravatar.cc/200?img=${n}`;
 const pic = (seed: string, w = 600, h = 600) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
 
 export const sampleApps: PhoneApps = {
+  // Podcast can be driven entirely by an RSS feed (parsed at runtime).
+  podcast: {
+    feedUrl: "https://feed.podbean.com/dunctank/feed.xml",
+    subscribeUrl: "https://dunctank.podbean.com",
+  },
   messages: {
     chats: [
       {

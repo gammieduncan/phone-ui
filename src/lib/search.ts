@@ -131,6 +131,25 @@ export function searchApps(apps: PhoneApps, query: string): SearchResult[] {
     }
   }
 
+  // Podcast (static episodes only; feed-loaded episodes are fetched in-app)
+  if (apps.podcast) {
+    let n = 0;
+    for (const ep of apps.podcast.episodes ?? []) {
+      if (n >= CAP) break;
+      if (has(ep.title, q) || has(ep.guest, q) || has(ep.description, q)) {
+        out.push({
+          key: `pod-${ep.id}`,
+          appId: "podcast",
+          category: apps.podcast.showName || "Podcasts",
+          itemId: ep.id,
+          title: snippet(ep.title, 50),
+          subtitle: ep.guest,
+        });
+        n++;
+      }
+    }
+  }
+
   // Tinder
   if (apps.tinder) {
     let n = 0;

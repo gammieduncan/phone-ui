@@ -162,3 +162,25 @@ export function InstagramIcon() {
     </IconTile>
   );
 }
+
+export function PodcastIcon() {
+  return (
+    <IconTile bg="linear-gradient(180deg,#C969F0,#7B3FE4)">
+      <svg width="56%" viewBox="0 0 24 24" fill="none">
+        <rect x="9" y="2" width="6" height="11" rx="3" fill="#fff" />
+        <path d="M5 10.5a7 7 0 0014 0" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+        <path d="M12 17.5V21" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+        <path d="M8.5 21h7" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+      </svg>
+    </IconTile>
+  );
+}
+
+/** A play/pause glyph used inside the Podcast app rows and player. */
+export function PlayGlyph({ size = 22, paused, style }: GlyphProps & { paused?: boolean }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" style={style}>
+      {paused ? <path d="M8 5v14l11-7z" /> : <path d="M7 5h4v14H7zM13 5h4v14h-4z" />}
+    </svg>
+  );
+}

@@ -9,6 +9,9 @@ import "./demo.css";
 const params = new URLSearchParams(location.search);
 const initialApp = (params.get("app") as AppId) || undefined;
 const initialSearch = params.get("search") ?? undefined;
+const csv = (key: string) => params.get(key)?.split(",").map((s) => s.trim()).filter(Boolean) as AppId[] | undefined;
+const grid = csv("grid");
+const dock = csv("dock");
 
 const SAMPLE_CONFIG: PhoneData = {
   owner: { name: "Duncan Gammie" },
@@ -91,6 +94,8 @@ function Demo() {
         statusTime={config.statusTime ?? "9:41"}
         initialApp={initialApp}
         initialSearch={initialSearch}
+        grid={grid}
+        dock={dock}
       />
     </main>
   );

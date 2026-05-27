@@ -18,6 +18,8 @@ export function Phone({
   statusTime = "9:41",
   initialApp,
   initialSearch,
+  grid,
+  dock,
   appOrder,
   className,
   frameless,
@@ -37,23 +39,30 @@ export function Phone({
     setSearching(false);
   };
 
-  const visible = useMemo(() => {
-    const order = appOrder ?? DEFAULT_ORDER;
-    return order.map((id) => APP_REGISTRY[id]).filter((def) => def && def.has(apps));
-  }, [apps, appOrder]);
+  // Layout resolution (all explicit, all optional):
+  //  - `grid` (or legacy `appOrder`): which apps appear on the home grid, in order.
+  //  - `dock`: which apps appear in the bottom dock, in order.
+  //  An app is only shown if it both appears in a layout list and has data.
+  //  With no props, defaults reproduce a sensible iOS-like layout.
+  const gridSpec = grid ?? appOrder;
+  const { gridApps, dockApps } = useMemo(() => {
+    const registryDock = Object.values(APP_REGISTRY)
+      .filter((d) => d.dock !== undefined)
+      .sort((a, b) => a.dock! - b.dock!)
+      .map((d) => d.id);
 
-  const dockApps = useMemo(
-    () =>
-      visible
-        .filter((d) => d.dock !== undefined)
-        .sort((a, b) => (a.dock! - b.dock!))
-        .slice(0, 4),
-    [visible],
-  );
-  const gridApps = useMemo(
-    () => visible.filter((d) => !dockApps.includes(d)),
-    [visible, dockApps],
-  );
+    // Default dock excludes anything the caller explicitly placed on the grid.
+    const dockList = dock ?? registryDock.filter((id) => !(gridSpec ?? []).includes(id));
+    const gridList = gridSpec ?? DEFAULT_ORDER;
+
+    const resolve = (ids: AppId[]) =>
+      ids.map((id) => APP_REGISTRY[id]).filter((def) => def && def.has(apps));
+
+    const dockApps = resolve(dockList).slice(0, 4);
+    const dockIds = new Set(dockApps.map((d) => d.id));
+    const gridApps = resolve(gridList).filter((d) => !dockIds.has(d.id));
+    return { gridApps, dockApps };
+  }, [apps, gridSpec, dock]);
 
   const openDef = open ? APP_REGISTRY[open] : null;
   const wallpaperStyle = wallpaper

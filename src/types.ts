@@ -175,6 +175,43 @@ export interface InstagramData {
   searchHistory?: string[];
 }
 
+/* ------------------------------------------------------------------- Podcast */
+
+export interface PodcastEpisode {
+  id: string;
+  title: string;
+  /** Direct audio URL (mp3). Streamed by the in-app player. */
+  audioUrl: string;
+  description?: string;
+  date?: ISODateString;
+  /** Optional episode number/label, e.g. "Ep. 12". */
+  episodeLabel?: string;
+  /** Guest or subject, shown under the title. */
+  guest?: string;
+  /** Per-episode artwork; falls back to the show artwork. */
+  artwork?: string;
+  durationSeconds?: number;
+}
+
+export interface PodcastData {
+  /**
+   * Point the app at a podcast RSS feed and it fetches + parses episodes (and
+   * the show's title, artwork, and description) at runtime. The feed host must
+   * allow CORS (most podcast hosts, including Podbean, do).
+   */
+  feedUrl?: string;
+  /** Show name. Optional if a feedUrl is given. */
+  showName?: string;
+  author?: string;
+  /** Show artwork URL (square). */
+  artwork?: string;
+  description?: string;
+  /** External subscribe link (Apple/Spotify/Podbean). */
+  subscribeUrl?: string;
+  /** Hand-authored episodes. Optional if a feedUrl is given. */
+  episodes?: PodcastEpisode[];
+}
+
 /* ----------------------------------------------------------------- The phone */
 
 /** Identifiers for each built-in app. */
@@ -184,6 +221,7 @@ export type AppId =
   | "notes"
   | "calls"
   | "browser"
+  | "podcast"
   | "tinder"
   | "instagram";
 
@@ -194,6 +232,7 @@ export interface PhoneApps {
   notes?: NotesData;
   calls?: CallsData;
   browser?: BrowserData;
+  podcast?: PodcastData;
   tinder?: TinderData;
   instagram?: InstagramData;
 }
@@ -225,7 +264,20 @@ export interface PhoneProps {
   initialApp?: AppId;
   /** Open Spotlight search on mount, pre-filled with this query. */
   initialSearch?: string;
-  /** Override the default app order/visibility on the home grid. */
+  /**
+   * Which apps appear on the home grid, in this left-to-right / top-to-bottom
+   * order. Listing an app here keeps it off the default dock. Apps you omit
+   * (from both `grid` and `dock`) are hidden even if you pass their data.
+   * Defaults to all apps that have data and aren't in the dock.
+   */
+  grid?: AppId[];
+  /**
+   * Which apps appear in the bottom dock, in order (max 4 shown). Defaults to
+   * a sensible set (Phone, Messages, Browser, Photos) minus anything you've
+   * explicitly placed on the `grid`.
+   */
+  dock?: AppId[];
+  /** @deprecated Alias for `grid`. */
   appOrder?: AppId[];
   className?: string;
   /** Render only the screen content, without the physical device frame. */
